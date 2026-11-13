@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.geom.Point2D;
+import java.lang.Math;
 
 abstract class Car implements Movable {
     private final int nrDoors; // Number of doors
@@ -6,6 +8,11 @@ abstract class Car implements Movable {
     private double currentSpeed; // The current speed of the car (km/h)
     private Color color; // Color of the car
     private final String modelName; // The car model name
+
+    // Used in movable implementation
+    private double angle = (Math.PI / 2); // Angle that car is facing (lower value than the initialized value will turn it to the right and a higher value will turn it to the left)
+    private final double turnIncrement = (Math.PI / 2); // Default turn radius setting is 90 degrees
+    private final Point2D.Double position = new Point2D.Double(0, 0);
 
     public Car(int nrDoors, Color color, double enginePower, String modelName) {
         this.nrDoors = nrDoors;
@@ -60,5 +67,25 @@ abstract class Car implements Movable {
     // TODO fix this method according to assignment instructions
     public void brake(double amount) {
         decrementSpeed(amount);
+    }
+
+    /*
+    MOVABLE IMPLEMENTATION
+    */
+
+    public void move() {
+        this.position.x += Math.cos(this.angle) * this.getCurrentSpeed();
+        this.position.y += Math.sin(this.angle) * this.getCurrentSpeed();
+    }
+
+    public void turnLeft() {
+        angle += turnIncrement;
+    }
+    public void turnRight() {
+        angle -= turnIncrement;
+    }
+
+    public Point2D.Double getPoint() {
+        return position;
     }
 }
