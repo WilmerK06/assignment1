@@ -1,11 +1,11 @@
 import java.awt.*;
 
-abstract class Car {
+abstract class Car implements Movable {
     private final int nrDoors; // Number of doors
     private final double enginePower; // Engine power of the car (hp)
     private double currentSpeed; // The current speed of the car (km/h)
     private Color color; // Color of the car
-    public final String modelName; // The car model name
+    private final String modelName; // The car model name
 
     public Car(int nrDoors, Color color, double enginePower, String modelName) {
         this.nrDoors = nrDoors;
@@ -27,6 +27,9 @@ abstract class Car {
     }
     public Color getColor() {
         return color;
+    }
+    public String getModelName() {
+        return modelName;
     }
 
     public void setColor(Color clr) {
