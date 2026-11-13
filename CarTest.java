@@ -43,11 +43,60 @@ public class CarTest {
         reportResult("Car turned to the right", result);
     }
 
+    private static void testGas() {
+        Volvo240 volvo = new Volvo240();
+        volvo.gas(2);
+        boolean result = volvo.getCurrentSpeed() != 2.5;
+        reportResult("Gas didn't go out of bounds.", result);
+    }
+
+    private static void testBrake() {
+        Volvo240 volvo = new Volvo240();
+        volvo.brake(2);
+        boolean result = volvo.getCurrentSpeed() != -2.5;
+        reportResult("Brake didn't go out of bounds.", result);
+    }
+
+    private static void testCurrentSpeed() {
+        Volvo240 volvo = new Volvo240();
+        for (int i = 0; i < 81; i++) {
+            volvo.gas(1);
+        }
+        boolean roofResult = volvo.getCurrentSpeed() <= 100;
+
+        volvo.stopEngine();
+        volvo.brake(1);
+        boolean floorResult = volvo.getCurrentSpeed() >= 0;
+
+        boolean result = roofResult && floorResult;
+        reportResult("Current speed is not out of bounds", result);
+    }
+
+    private static void testGasPositive() {
+        Volvo240 volvo = new Volvo240();
+        double tempSpeed = volvo.getCurrentSpeed();
+        volvo.gas(1);
+        boolean result = volvo.getCurrentSpeed() / tempSpeed > 0;
+        reportResult("Gas won't decrease speed", result);
+    }
+
+    private static void testBrakeNegative() {
+        Volvo240 volvo = new Volvo240();
+        double tempSpeed = volvo.getCurrentSpeed();
+        volvo.brake(1);
+        boolean result = volvo.getCurrentSpeed() / tempSpeed < 0;
+        reportResult("Brake won't decrease speed", result);
+    }
+
+
+
     static void main() {
         testTurbo();
         testMove();
         testTurnLeft();
         testTurnRight();
-        //TODO: add and run more tests
+        testGas();
+        testBrake();
+        testCurrentSpeed();
     }
 }
